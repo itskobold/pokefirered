@@ -149,6 +149,7 @@ bool32 Overworld_DoScrollSceneForCredits(u8 *, const struct CreditsOverworldCmd 
 
 bool32 IsSendingKeysOverCable(void);
 
+void CB2_ReturnToFieldWithoutStartingGameTime(void);
 void CB2_ReturnToFieldWithOpenMenu(void);
 void CB2_WhiteOut(void);
 void CB2_ReturnToFieldFromMultiplayer(void);

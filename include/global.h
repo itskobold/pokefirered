@@ -173,10 +173,14 @@ struct UCoords32
 
 struct Time
 {
-    /*0x00*/ s16 days;
-    /*0x02*/ s8 hours;
-    /*0x03*/ s8 minutes;
-    /*0x04*/ s8 seconds;
+    /*0x00*/ u32 numSeconds:6;
+    /*0x00*/ u32 numMinutes:3;
+    /*0x01*/ u32 numHours:5;
+    /*0x02*/ u32 numDays:5;
+    /*0x02*/ u32 numMonths:4;
+    /*0x03*/ u32 numYears:5;
+    /*0x04*/ u32 day:4;  // Monday, Tuesday etc.
+    /*0x05*/ bool8 flowing;
 };
 
 struct Pokedex
@@ -331,9 +335,8 @@ struct SaveBlock2
               u16 optionsBattleSceneOff:1; // whether battle animations are disabled
               u16 regionMapZoom:1; // whether the map is zoomed in
     /*0x018*/ struct Pokedex pokedex;
-    /*0x090*/ u8 filler_90[0x8];
-    /*0x098*/ struct Time localTimeOffset;
-    /*0x0A0*/ struct Time lastBerryTreeUpdate;
+    /*0x090*/ u8 filler_90[0x14];
+    /*0x0A4*/ struct Time time;
     /*0x0A8*/ u32 gcnLinkFlags; // Read by Pokemon Colosseum/XD
     /*0x0AC*/ bool8 unkFlag1; // Set TRUE, never read
     /*0x0AD*/ bool8 unkFlag2; // Set FALSE, never read
@@ -805,7 +808,8 @@ struct SaveBlock1
     /*0x3AD4*/ u8 registeredTexts[UNION_ROOM_KB_ROW_COUNT][21];
     /*0x3BA8*/ struct TrainerNameRecord trainerNameRecords[20];
     /*0x3C98*/ struct DaycareMon route5DayCareMon;
-    /*0x3D24*/ u8 unused_3D24[16];
+    /*0x3D24*/ u8 unused_3D24[15];
+    /*0x3D33*/ bool8 hasDebugMenu;  // Enables debug option in start menu
     /*0x3D34*/ u32 towerChallengeId;
     /*0x3D38*/ struct TrainerTower trainerTower[NUM_TOWER_CHALLENGE_TYPES];
 }; // size: 0x3D68

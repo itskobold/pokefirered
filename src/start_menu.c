@@ -34,6 +34,7 @@
 #include "option_menu.h"
 #include "save_menu_util.h"
 #include "help_system.h"
+#include "time.h"
 #include "constants/songs.h"
 #include "constants/field_weather.h"
 
@@ -65,6 +66,7 @@ static EWRAM_DATA u8 sNumStartMenuItems = 0;
 static EWRAM_DATA u8 sStartMenuOrder[MAX_STARTMENU_ITEMS] = {};
 static EWRAM_DATA s8 sDrawStartMenuState[2] = {};
 static EWRAM_DATA u8 sSafariZoneStatsWindowId = 0;
+static EWRAM_DATA u8 sClockWindowId = 0;
 static ALIGNED(4) EWRAM_DATA u8 sSaveStatsWindowId = 0;
 
 static u8 (*sSaveDialogCB)(void);
@@ -134,16 +136,48 @@ static const struct WindowTemplate sSafariZoneStatsWindowTemplate = {
     .baseBlock = 0x008
 };
 
-static const u8 *const sStartMenuDescPointers[] = {
-    gStartMenuDesc_Pokedex,
-    gStartMenuDesc_Pokemon,
-    gStartMenuDesc_Bag,
-    gStartMenuDesc_Player,
-    gStartMenuDesc_Save,
-    gStartMenuDesc_Option,
-    gStartMenuDesc_Exit,
-    gStartMenuDesc_Retire,
-    gStartMenuDesc_Player
+static const struct WindowTemplate sClockWindowTemplate = {
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 15,
+    .width = 14,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x198
+};
+
+static const u8* const sClockPeriodStrings[] = {
+    gText_Midnight,
+    gText_Night,
+    gText_Dawn,
+    gText_Day,
+    gText_Midday,
+    gText_Dusk
+};
+
+static const u8 *const sClockDayStrings[] = {
+    gText_MonSpace,
+    gText_TueSpace,
+    gText_WedSpace,
+    gText_ThuSpace,
+    gText_FriSpace,
+    gText_SatSpace,
+    gText_SunSpace
+};
+
+static const u8* const sClockMonthStrings[] = {
+    gText_JanuarySpace,
+    gText_FebruarySpace,
+    gText_MarchSpace,
+    gText_AprilSpace,
+    gText_MaySpace,
+    gText_JuneSpace,
+    gText_JulySpace,
+    gText_AugustSpace,
+    gText_SeptemberSpace,
+    gText_OctoberSpace,
+    gText_NovemberSpace,
+    gText_DecemberSpace
 };
 
 static const struct BgTemplate sBGTemplates_AfterLinkSaveMessage[] = {
@@ -194,6 +228,7 @@ static void SetHasPokedexAndPokemon(void)
 static void SetUpStartMenu(void)
 {
     sNumStartMenuItems = 0;
+    StopGameTime();
     if (IsUpdateLinkStateCBActive() == TRUE)
         SetUpStartMenu_Link();
     else if (InUnionRoom() == TRUE)
@@ -256,11 +291,15 @@ static void DrawSafariZoneStatsWindow(void)
     sSafariZoneStatsWindowId = AddWindow(&sSafariZoneStatsWindowTemplate);
     PutWindowTilemap(sSafariZoneStatsWindowId);
     DrawStdWindowFrame(sSafariZoneStatsWindowId, FALSE);
-    ConvertIntToDecimalStringN(gStringVar1, gSafariZoneStepCounter, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar2, 600, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar3, gNumSafariBalls, STR_CONV_MODE_RIGHT_ALIGN, 2);
-    StringExpandPlaceholders(gStringVar4, gText_MenuSafariStats);
-    AddTextPrinterParameterized(sSafariZoneStatsWindowId, FONT_NORMAL, gStringVar4, 4, 3, 0xFF, NULL);
+
+    u8 str[32];
+    ConvertIntToDecimalStringN(str, gSafariZoneStepCounter, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    StringCopy(gStringVar1, str);
+    StringAppend(gStringVar1, gText_MenuSafariStats);
+    ConvertIntToDecimalStringN(str, gNumSafariBalls, STR_CONV_MODE_RIGHT_ALIGN, 2);
+    StringAppend(gStringVar1, str);
+
+    AddTextPrinterParameterized(sSafariZoneStatsWindowId, FONT_NORMAL, gStringVar1, 4, 3, 0xFF, NULL);
     CopyWindowToVram(sSafariZoneStatsWindowId, COPYWIN_GFX);
 }
 
@@ -272,6 +311,49 @@ static void DestroySafariZoneStatsWindow(void)
         CopyWindowToVram(sSafariZoneStatsWindowId, COPYWIN_GFX);
         RemoveWindow(sSafariZoneStatsWindowId);
     }
+}
+
+static const u8 sDayPeriodBuffer[] = _(" - ");
+static void DrawClockWindow(void)
+{
+    sClockWindowId = AddWindow(&sClockWindowTemplate);
+    PutWindowTilemap(sClockWindowId);
+    DrawStdWindowFrame(sClockWindowId, FALSE);
+
+    u8 str[32];
+    u8 hours = gSaveBlock2Ptr->time.numHours;
+    bool8 isPM = hours >= 12;
+
+    // Top line
+    ConvertIntToDecimalStringN(str, Format12Hour(hours), STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringCopy(gStringVar4, str);
+    StringAppend(gStringVar4, gText_Colon);
+    ConvertIntToDecimalStringN(str, GetSimulatedMinutes(), STR_CONV_MODE_LEADING_ZEROS, 2);
+    StringAppend(gStringVar4, str);
+    if (isPM)
+        StringAppend(gStringVar4, gText_SpacePM);
+    else
+        StringAppend(gStringVar4, gText_SpaceAM);
+    StringAppend(gStringVar4, sDayPeriodBuffer);
+    StringAppend(gStringVar4, sClockPeriodStrings[GetDayPeriod()]);
+    StringAppend(gStringVar4, gText_NewLine);
+
+    // Bottom line
+    StringAppend(gStringVar4, sClockDayStrings[gSaveBlock2Ptr->time.day]);
+    StringAppend(gStringVar4, sClockMonthStrings[gSaveBlock2Ptr->time.numMonths]);
+    ConvertIntToDecimalStringN(str, gSaveBlock2Ptr->time.numDays, STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringAppend(gStringVar4, str);
+
+    // Print
+    AddTextPrinterParameterized(sClockWindowId, FONT_NORMAL, gStringVar4, 4, 3, 0xFF, NULL);
+    CopyWindowToVram(sClockWindowId, COPYWIN_GFX);
+}
+
+static void DestroyClockWindow(void)
+{
+    ClearStdWindowAndFrameToTransparent(sClockWindowId, FALSE);
+    CopyWindowToVram(sClockWindowId, COPYWIN_GFX);
+    RemoveWindow(sClockWindowId);
 }
 
 static s8 PrintStartMenuItems(s8 *cursor_p, u8 nitems)
@@ -321,15 +403,15 @@ static s8 DoDrawStartMenu(void)
         sDrawStartMenuState[0]++;
         break;
     case 4:
+        DrawClockWindow();
+        sDrawStartMenuState[0]++;
+        break;
+    case 5:
         if (PrintStartMenuItems(&sDrawStartMenuState[1], 2) == TRUE)
             sDrawStartMenuState[0]++;
         break;
-    case 5:
+    case 6:
         sStartMenuCursorPos = Menu_InitCursor(GetStartMenuWindowId(), FONT_NORMAL, 0, 0, 15, sNumStartMenuItems, sStartMenuCursorPos);
-        if (!MenuHelpers_IsLinkActive() && InUnionRoom() != TRUE && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP)
-        {
-            DrawHelpMessageWindowWithText(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]]);
-        }
         CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
         return TRUE;
     }
@@ -410,19 +492,11 @@ static bool8 StartCB_HandleInput(void)
     {
         PlaySE(SE_SELECT);
         sStartMenuCursorPos = Menu_MoveCursor(-1);
-        if (!MenuHelpers_IsLinkActive() && InUnionRoom() != TRUE && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP)
-        {
-            PrintTextOnHelpMessageWindow(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]], 2);
-        }
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
         sStartMenuCursorPos = Menu_MoveCursor(+1);
-        if (!MenuHelpers_IsLinkActive() && InUnionRoom() != TRUE && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP)
-        {
-            PrintTextOnHelpMessageWindow(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]], 2);
-        }
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -435,8 +509,8 @@ static bool8 StartCB_HandleInput(void)
     }
     if (JOY_NEW(B_BUTTON | START_BUTTON))
     {
+        DestroyClockWindow();
         DestroySafariZoneStatsWindow();
-        DestroyHelpMessageWindow_();
         CloseStartMenu();
         return TRUE;
     }
@@ -467,6 +541,7 @@ static bool8 StartMenuPokedexCallback(void)
     {
         IncrementGameStat(GAME_STAT_CHECKED_POKEDEX);
         PlayRainStoppingSoundEffect();
+        DestroyClockWindow();
         DestroySafariZoneStatsWindow();
         CleanupOverworldWindowsAndTilemaps();
         SetMainCallback2(CB2_OpenPokedexFromStartMenu);
@@ -480,6 +555,7 @@ static bool8 StartMenuPokemonCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
+        DestroyClockWindow();
         DestroySafariZoneStatsWindow();
         CleanupOverworldWindowsAndTilemaps();
         SetMainCallback2(CB2_PartyMenuFromStartMenu);
@@ -493,6 +569,7 @@ static bool8 StartMenuBagCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
+        DestroyClockWindow();
         DestroySafariZoneStatsWindow();
         CleanupOverworldWindowsAndTilemaps();
         SetMainCallback2(CB2_BagMenuFromStartMenu);
@@ -506,6 +583,7 @@ static bool8 StartMenuPlayerCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
+        DestroyClockWindow();
         DestroySafariZoneStatsWindow();
         CleanupOverworldWindowsAndTilemaps();
         ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu);
@@ -525,6 +603,7 @@ static bool8 StartMenuOptionCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
+        DestroyClockWindow();
         DestroySafariZoneStatsWindow();
         CleanupOverworldWindowsAndTilemaps();
         SetMainCallback2(CB2_OptionsMenuFromStartMenu);
@@ -536,16 +615,16 @@ static bool8 StartMenuOptionCallback(void)
 
 static bool8 StartMenuExitCallback(void)
 {
+    DestroyClockWindow();
     DestroySafariZoneStatsWindow();
-    DestroyHelpMessageWindow_();
     CloseStartMenu();
     return TRUE;
 }
 
 static bool8 StartMenuSafariZoneRetireCallback(void)
 {
+    DestroyClockWindow();
     DestroySafariZoneStatsWindow();
-    DestroyHelpMessageWindow_();
     CloseStartMenu();
     SafariZoneRetirePrompt();
     return TRUE;
@@ -1003,6 +1082,7 @@ static void CloseStartMenu(void)
     RemoveStartMenuWindow();
     ClearPlayerHeldMovementAndUnfreezeObjectEvents();
     UnlockPlayerFieldControls();
+    StartGameTime();
 }
 
 void AppendToList(u8 *list, u8 *cursor, u8 newEntry)

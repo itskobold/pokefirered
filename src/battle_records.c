@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "overworld.h"
 #include "strings.h"
+#include "time.h"
 #include "trainer_card.h"
 #include "constants/battle.h"
 #include "constants/songs.h"
@@ -82,6 +83,7 @@ static u8 *const sStringVars[3] = {
 
 void ShowBattleRecords(void)
 {
+    StopGameTime();  // Restarted via CB2_ReturnToFieldContinueScriptPlayMapMusic in Task_DestroyAndReturnToField
     SetVBlankCallback(NULL);
     SetMainCallback2(MainCB2_SetUp);
 }

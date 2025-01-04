@@ -287,7 +287,7 @@ static void Task_HandleShopMenuSell(u8 taskId)
 
 static void CB2_GoToSellMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_SHOP, OPEN_BAG_LAST, CB2_ReturnToField);
+    GoToBagMenu(ITEMMENULOCATION_SHOP, OPEN_BAG_LAST, CB2_ReturnToFieldWithoutStartingGameTime);
     gFieldCallback = MapPostLoadHook_ReturnToShopMenu;
 }
 
@@ -680,7 +680,7 @@ static void BuyMenuFreeMemory(void)
 static void SetShopExitCallback(void)
 {
     gFieldCallback = MapPostLoadHook_ReturnToShopMenu;
-    SetMainCallback2(CB2_ReturnToField);
+    SetMainCallback2(CB2_ReturnToFieldWithoutStartingGameTime);
 }
 
 
@@ -1042,7 +1042,7 @@ static void Task_ExitBuyMenu(u8 taskId)
     {
         DestroyListMenuTask(tListTaskId, NULL, NULL);
         BuyMenuFreeMemory();
-        SetMainCallback2(CB2_ReturnToField);
+        SetMainCallback2(CB2_ReturnToFieldWithoutStartingGameTime);
         DestroyTask(taskId);
     }
 }

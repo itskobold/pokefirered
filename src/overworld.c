@@ -44,6 +44,7 @@
 #include "script_pokemon_util.h"
 #include "start_menu.h"
 #include "tileset_anims.h"
+#include "time.h"
 #include "trainer_pokemon_sprites.h"
 #include "vs_seeker.h"
 #include "wild_encounter.h"
@@ -1525,6 +1526,7 @@ void CB2_NewGame(void)
     gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     gFieldCallback2 = NULL;
     DoMapLoadLoop(&gMain.state);
+    StartGameTime();
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);
     SetMainCallback2(CB2_Overworld);
@@ -1547,6 +1549,7 @@ void CB2_WhiteOut(void)
         val = 0;
         DoMapLoadLoop(&val);
         QuestLog_CutRecording();
+        StartGameTime();
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_Overworld);
         SetMainCallback2(CB2_Overworld);
@@ -1572,6 +1575,7 @@ static void CB2_LoadMap2(void)
     }
     else
     {
+        StartGameTime();
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_Overworld);
         SetMainCallback2(CB2_Overworld);
@@ -1589,6 +1593,7 @@ static void CB2_LoadMapOnReturnToFieldCableClub(void)
 {
     if (LoadMapInStepsLink(&gMain.state))
     {
+        StartGameTime();
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_UpdateLinkState);
         ResetAllMultiplayerState();
@@ -1597,6 +1602,20 @@ static void CB2_LoadMapOnReturnToFieldCableClub(void)
 }
 
 void CB2_ReturnToField(void)
+{
+    StartGameTime();
+    if (IsUpdateLinkStateCBActive() == TRUE)
+    {
+        SetMainCallback2(CB2_ReturnToFieldLink);
+    }
+    else
+    {
+        FieldClearVBlankHBlankCallbacks();
+        SetMainCallback2(CB2_ReturnToFieldLocal);
+    }
+}
+
+void CB2_ReturnToFieldWithoutStartingGameTime(void)
 {
     if (IsUpdateLinkStateCBActive() == TRUE)
     {
@@ -1645,7 +1664,7 @@ void CB2_ReturnToFieldWithOpenMenu(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback2 = FieldCB_ReturnToFieldOpenStartMenu;
-    CB2_ReturnToField();
+    CB2_ReturnToFieldWithoutStartingGameTime();
 }
 
 void CB2_ReturnToFieldContinueScript(void)

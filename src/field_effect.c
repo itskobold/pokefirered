@@ -21,6 +21,7 @@
 #include "script.h"
 #include "special_field_anim.h"
 #include "task.h"
+#include "time.h"
 #include "trainer_pokemon_sprites.h"
 #include "trig.h"
 #include "util.h"
@@ -1064,7 +1065,7 @@ static void Task_FlyIntoMap(u8 taskId);
 
 void ReturnToFieldFromFlyMapSelect(void)
 {
-    SetMainCallback2(CB2_ReturnToField);
+    SetMainCallback2(CB2_ReturnToFieldWithoutStartingGameTime);
     gFieldCallback = FieldCallback_UseFly;
 }
 
@@ -1129,6 +1130,7 @@ static void Task_FlyIntoMap(u8 taskId)
     {
         UnlockPlayerFieldControls();
         UnfreezeObjectEvents();
+        StartGameTime();
         DestroyTask(taskId);
     }
 }

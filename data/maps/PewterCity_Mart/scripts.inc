@@ -12,11 +12,13 @@ PewterCity_Mart_EventScript_Boy::
 PewterCity_Mart_EventScript_Clerk::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart PewterCity_Mart_Items
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 

@@ -1,4 +1,5 @@
 #include "play_time.h"
+#include "time.h"
 
 static u8 sPlayTimeCounterState;
 
@@ -39,6 +40,10 @@ void PlayTimeCounter_Update(void)
         {
             gSaveBlock2Ptr->playTimeVBlanks = 0;
             gSaveBlock2Ptr->playTimeSeconds++;
+
+            if (gSaveBlock2Ptr->time.flowing)
+                IncrementSecond();
+
             if (gSaveBlock2Ptr->playTimeSeconds > 59)
             {
                 gSaveBlock2Ptr->playTimeSeconds = 0;

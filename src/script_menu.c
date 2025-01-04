@@ -10,6 +10,7 @@
 #include "strings.h"
 #include "field_effect.h"
 #include "event_scripts.h"
+#include "time.h"
 #include "constants/songs.h"
 #include "constants/seagallop.h"
 #include "constants/menu.h"
@@ -974,6 +975,7 @@ bool8 CreatePCMenu(void)
         return FALSE;
     gSpecialVar_Result = SCR_MENU_UNSET;
     CreatePCMenuWindow();
+    StopGameTime();
     return TRUE;
 }
 

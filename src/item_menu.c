@@ -1834,7 +1834,7 @@ static void GoToBerryPouch_Sell(void)
 
 static void ReturnToBagMenuFromSubmenu_Sell(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_SHOP, OPEN_BAG_LAST, CB2_ReturnToField);
+    GoToBagMenu(ITEMMENULOCATION_SHOP, OPEN_BAG_LAST, CB2_ReturnToFieldWithoutStartingGameTime);
 }
 
 static void Task_PrintSaleConfirmationText(u8 taskId)

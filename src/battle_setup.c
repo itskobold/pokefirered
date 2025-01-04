@@ -26,6 +26,7 @@
 #include "battle.h"
 #include "battle_transition.h"
 #include "battle_controllers.h"
+#include "time.h"
 #include "constants/battle_setup.h"
 #include "constants/items.h"
 #include "constants/maps.h"
@@ -185,6 +186,7 @@ static void Task_BattleStart(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
+    StopGameTime();
     switch (tState)
     {
     case 0:

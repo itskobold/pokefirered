@@ -149,6 +149,11 @@ void NewGameInitData(void)
     RunScriptImmediately(EventScript_ResetAllMapFlags);
     StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
     ResetTrainerTowerResults();
+    InitGameTime();
+    StartGameTime();
+
+    // Enable debug menu
+    gSaveBlock1Ptr->hasDebugMenu = TRUE;
 }
 
 static void ResetMiniGamesResults(void)

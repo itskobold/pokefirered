@@ -50,6 +50,7 @@ ALIGNED(4) const u8 gText_ABUTTONNext_BBUTTONBack[] = _("{A_BUTTON}NEXT {B_BUTTO
 ALIGNED(4) const u8 gText_UPDOWNPick_ABUTTONNext_BBUTTONBack[] = _("{DPAD_UPDOWN}PICK {A_BUTTON}NEXT {B_BUTTON}CANCEL");
 ALIGNED(4) const u8 gText_UPDOWNPick_ABUTTONBBUTTONCancel[] = _("{DPAD_UPDOWN}PICK {A_BUTTON}{B_BUTTON}CANCEL");
 ALIGNED(4) const u8 gText_ABUTTONExit[] = _("{A_BUTTON}EXIT");
+const u8 gText_NewLine[] = _("\n");
 const u8 gText_Boy[] = _("BOY");
 const u8 gText_Girl[] = _("GIRL");
 const u8 gText_PokedexTableOfContents[] = _("POKéDEX   TABLE OF CONTENTS");
@@ -164,7 +165,7 @@ const u8 gText_MenuSave[] = _("SAVE");
 const u8 gText_MenuOption[] = _("OPTION");
 const u8 gText_MenuExit[] = _("EXIT");
 const u8 gText_MenuRetire[] = _("RETIRE");
-const u8 gText_MenuSafariStats[] = _("{STR_VAR_1}/{STR_VAR_2}\nBALLS  {STR_VAR_3}");
+const u8 gText_MenuSafariStats[] = _("/600\nBALLS  ");
 const u8 gText_TimesStrVar1[] = _("×{STR_VAR_1}");
 const u8 gText_Berry[] = _(" BERRY");
 const u8 gText_Coins[] = _("{STR_VAR_1} COINS");
@@ -904,6 +905,35 @@ const u8 gStartMenuDesc_Save[] = _("Save your game with a complete record\nof yo
 const u8 gStartMenuDesc_Option[] = _("Adjust various game settings such as text\nspeed, game rules, etc.");
 const u8 gStartMenuDesc_Exit[] = _("Close this MENU window.");
 const u8 gStartMenuDesc_Retire[] = _("Retire from the SAFARI GAME and return to\nthe registration counter.");
+
+// Time-related strings
+const u8 gText_SpaceAM[] = _(" AM");
+const u8 gText_SpacePM[] = _(" PM");
+const u8 gText_MonSpace[] = _("Mon. ");
+const u8 gText_TueSpace[] = _("Tue. ");
+const u8 gText_WedSpace[] = _("Wed. ");
+const u8 gText_ThuSpace[] = _("Thu. ");
+const u8 gText_FriSpace[] = _("Fri. ");
+const u8 gText_SatSpace[] = _("Sat. ");
+const u8 gText_SunSpace[] = _("Sun. ");
+const u8 gText_JanuarySpace[] = _("January ");
+const u8 gText_FebruarySpace[] = _("February ");
+const u8 gText_MarchSpace[] = _("March ");
+const u8 gText_AprilSpace[] = _("April ");
+const u8 gText_MaySpace[] = _("May ");
+const u8 gText_JuneSpace[] = _("June ");
+const u8 gText_JulySpace[] = _("July ");
+const u8 gText_AugustSpace[] = _("August ");
+const u8 gText_SeptemberSpace[] = _("September ");
+const u8 gText_OctoberSpace[] = _("October ");
+const u8 gText_NovemberSpace[] = _("November ");
+const u8 gText_DecemberSpace[] = _("December ");
+const u8 gText_Midnight[] = _("Midnight");
+const u8 gText_Night[] = _("Night");
+const u8 gText_Dawn[] = _("Dawn");
+const u8 gText_Day[] = _("Day");
+const u8 gText_Midday[] = _("Midday");
+const u8 gText_Dusk[] = _("Dusk");
 
 #include "data/text/quest_log.h"
 

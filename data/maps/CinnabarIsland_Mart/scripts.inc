@@ -12,11 +12,13 @@ CinnabarIsland_Mart_EventScript_Scientist::
 CinnabarIsland_Mart_EventScript_Clerk::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart CinnabarIsland_Mart_Items
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 

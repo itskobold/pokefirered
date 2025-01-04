@@ -123,11 +123,13 @@ TrainerTower_Lobby_EventScript_ReceptionistEnd::
 TrainerTower_Lobby_EventScript_MartClerk::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart TrainerTower_Lobby_Mart_Items
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 

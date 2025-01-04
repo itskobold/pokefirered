@@ -321,7 +321,7 @@ static void Task_DepositItem_WaitFadeAndGoToBag(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        GoToBagMenu(ITEMMENULOCATION_ITEMPC, OPEN_BAG_ITEMS, CB2_ReturnToField);
+        GoToBagMenu(ITEMMENULOCATION_ITEMPC, OPEN_BAG_ITEMS, CB2_ReturnToFieldWithoutStartingGameTime);
         gFieldCallback = CB2_ReturnFromDepositMenu;
         DestroyTask(taskId);
     }
@@ -384,7 +384,7 @@ static void Task_WithdrawItem_WaitFadeAndGoToItemStorage(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        ItemPc_Init(tItemPcParam, CB2_ReturnToField);
+        ItemPc_Init(tItemPcParam, CB2_ReturnToFieldWithoutStartingGameTime);
         DestroyTask(taskId);
     }
 }
@@ -595,7 +595,7 @@ static void CB2_ReturnToMailbox(void)
 static void CB2_SetCbToReturnToMailbox(void)
 {
     gFieldCallback = CB2_ReturnToMailbox;
-    SetMainCallback2(CB2_ReturnToField);
+    SetMainCallback2(CB2_ReturnToFieldWithoutStartingGameTime);
 }
 
 static void Task_PlayerPcMoveMailToBag(u8 taskId)
@@ -710,7 +710,7 @@ static void CB2_ReturnToMailboxPc_UpdateScrollVariables(void)
 void Mailbox_ReturnToMailListAfterDeposit(void)
 {
     gFieldCallback = CB2_ReturnToMailboxPc_UpdateScrollVariables;
-    SetMainCallback2(CB2_ReturnToField);
+    SetMainCallback2(CB2_ReturnToFieldWithoutStartingGameTime);
 }
 
 static void Task_Error_NoPokemon(u8 taskId)

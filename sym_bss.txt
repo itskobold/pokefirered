@@ -9,6 +9,7 @@
 	.include "src/daycare.o"
 	.include "src/trade.o"
 	.include "src/play_time.o"
+	.include "src/time.o"
 	.include "src/overworld.o"
 	.include "src/field_camera.o"
 	.include "src/script.o"

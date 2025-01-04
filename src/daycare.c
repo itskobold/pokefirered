@@ -27,6 +27,7 @@
 #include "help_system.h"
 #include "field_fadetransition.h"
 #include "trade.h"
+#include "time.h"
 #include "constants/daycare.h"
 #include "constants/region_map_sections.h"
 
@@ -1758,6 +1759,7 @@ static void Task_EggHatch(u8 taskID)
 {
     if (!gPaletteFade.active)
     {
+        StopGameTime();
         CleanupOverworldWindowsAndTilemaps();
         SetMainCallback2(CB2_EggHatch_0);
         gFieldCallback = FieldCB_ContinueScriptHandleMusic;

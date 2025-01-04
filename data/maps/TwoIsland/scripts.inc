@@ -60,6 +60,7 @@ TwoIsland_EventScript_SetShopExpanded3::
 TwoIsland_EventScript_Clerk::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	goto_if_eq VAR_MAP_SCENE_TWO_ISLAND, 4, TwoIsland_EventScript_ClerkShopExpanded3
 	goto_if_eq VAR_MAP_SCENE_TWO_ISLAND, 3, TwoIsland_EventScript_ClerkShopExpanded2
@@ -106,6 +107,7 @@ TwoIsland_EventScript_ClerkShopSkipIntro::
 	goto_if_eq VAR_MAP_SCENE_TWO_ISLAND, 3, TwoIsland_EventScript_ShopExpanded2
 	goto_if_eq VAR_MAP_SCENE_TWO_ISLAND, 2, TwoIsland_EventScript_ShopExpanded1
 	goto TwoIsland_EventScript_ShopInitial
+	startgametime
 	end
 
 TwoIsland_EventScript_ShopInitial::

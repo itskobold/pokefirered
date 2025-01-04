@@ -1633,6 +1633,16 @@
 	.2byte \quantity
 	.endm
 
+	@ Starts game time running
+	.macro startgametime
+	.byte 0xd5
+	.endm
+
+	@ Stops game time running
+	.macro stopgametime
+	.byte 0xd6
+	.endm
+
 
 @ Supplementary
 

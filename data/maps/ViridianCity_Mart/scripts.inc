@@ -53,6 +53,7 @@ ViridianCity_Mart_Movement_FacePlayer::
 
 ViridianCity_Mart_EventScript_Clerk::
 	lock
+	stopgametime
 	faceplayer
 	goto_if_eq VAR_MAP_SCENE_VIRIDIAN_CITY_MART, 1, ViridianCity_Mart_EventScript_SayHiToOak
 	goto_if_questlog EventScript_ReleaseEnd
@@ -60,6 +61,7 @@ ViridianCity_Mart_EventScript_Clerk::
 	waitmessage
 	pokemart ViridianCity_Mart_Items
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 

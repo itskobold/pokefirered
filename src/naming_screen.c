@@ -19,6 +19,7 @@
 #include "strings.h"
 #include "task.h"
 #include "text_window.h"
+#include "time.h"
 #include "trig.h"
 #include "constants/event_object_movement.h"
 #include "constants/help_system.h"
@@ -409,6 +410,7 @@ static const u8 sPageColumnXPos[KBPAGE_COUNT][KBCOL_COUNT] = {
 
 void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
 {
+    StopGameTime();
     sNamingScreen = Alloc(sizeof(struct NamingScreenData));
     if (!sNamingScreen)
     {

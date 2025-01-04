@@ -31,6 +31,7 @@ PalletTown_PlayersHouse_2F_EventScript_Sign::
 PalletTown_PlayersHouse_2F_EventScript_PC::
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
+	stopgametime
 	setvar VAR_0x8004, HELPCONTEXT_BEDROOM_PC
 	special Script_SetHelpContext
 	setvar VAR_0x8004, 1
@@ -48,5 +49,6 @@ EventScript_PalletTown_PlayersHouse_2F_ShutDownPC::
 	playse SE_PC_OFF
 	special AnimatePcTurnOff
 	special SetHelpContextForMap
+	startgametime
 	releaseall
 	end

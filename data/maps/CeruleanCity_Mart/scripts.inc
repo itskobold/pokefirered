@@ -12,11 +12,13 @@ CeruleanCity_Mart_EventScript_Woman::
 CeruleanCity_Mart_EventScript_Clerk::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart CeruleanCity_Mart_Items
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 

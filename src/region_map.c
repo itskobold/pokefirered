@@ -12,6 +12,7 @@
 #include "menu.h"
 #include "strings.h"
 #include "map_preview_screen.h"
+#include "time.h"
 #include "constants/songs.h"
 #include "constants/region_map_sections.h"
 #include "constants/heal_locations.h"
@@ -1055,6 +1056,7 @@ static void CB2_OpenRegionMap(void)
     {
     case 0:
         NullVBlankHBlankCallbacks();
+        StopGameTime();
         break;
     case 1:
         InitRegionMapBgs();

@@ -33,6 +33,7 @@
 #include "party_menu.h"
 #include "dynamic_placeholder_text_util.h"
 #include "new_menu_helpers.h"
+#include "time.h"
 #include "constants/songs.h"
 #include "constants/items.h"
 #include "constants/maps.h"
@@ -182,6 +183,7 @@ u8 GetLeadMonFriendship(void)
 void ShowTownMap(void)
 {
     QuestLog_CutRecording();
+    StopGameTime();
     InitRegionMapWithExitCB(REGIONMAP_TYPE_WALL, CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 

@@ -9,6 +9,7 @@
 
 // Exported ROM declarations
 
+extern const u8 gText_NewLine[];
 extern const u8 gText_FromSpace[];
 extern const u8 gText_Lv50[];
 extern const u8 gText_OpenLevel[];
@@ -645,6 +646,35 @@ extern const u8 gSaveStatName_Player[];
 extern const u8 gSaveStatName_Badges[];
 extern const u8 gSaveStatName_Pokedex[];
 extern const u8 gSaveStatName_Time[];
+
+// Time-related strings
+extern const u8 gText_SpaceAM[];
+extern const u8 gText_SpacePM[];
+extern const u8 gText_MonSpace[];
+extern const u8 gText_TueSpace[];
+extern const u8 gText_WedSpace[];
+extern const u8 gText_ThuSpace[];
+extern const u8 gText_FriSpace[];
+extern const u8 gText_SatSpace[];
+extern const u8 gText_SunSpace[];
+extern const u8 gText_JanuarySpace[];
+extern const u8 gText_FebruarySpace[];
+extern const u8 gText_MarchSpace[];
+extern const u8 gText_AprilSpace[];
+extern const u8 gText_MaySpace[];
+extern const u8 gText_JuneSpace[];
+extern const u8 gText_JulySpace[];
+extern const u8 gText_AugustSpace[];
+extern const u8 gText_SeptemberSpace[];
+extern const u8 gText_OctoberSpace[];
+extern const u8 gText_NovemberSpace[];
+extern const u8 gText_DecemberSpace[];
+extern const u8 gText_Midnight[];
+extern const u8 gText_Night[];
+extern const u8 gText_Dawn[];
+extern const u8 gText_Day[];
+extern const u8 gText_Midday[];
+extern const u8 gText_Dusk[];
 
 // mail
 extern const u8 gText_From[];

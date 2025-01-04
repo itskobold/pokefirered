@@ -43,11 +43,13 @@ IndigoPlateau_PokemonCenter_1F_EventScript_GymGuy::
 IndigoPlateau_PokemonCenter_1F_EventScript_Clerk::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart IndigoPlateau_PokemonCenter_1F_Items
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 

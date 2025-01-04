@@ -27,6 +27,7 @@
 #include "save.h"
 #include "load_save.h"
 #include "random.h"
+#include "time.h"
 #include "trade_scene.h"
 #include "constants/items.h"
 #include "constants/easy_chat.h"
@@ -2740,6 +2741,7 @@ static void CB2_FreeTradeAnim(void)
 void DoInGameTradeScene(void)
 {
     LockPlayerFieldControls();
+    StopGameTime();
     CreateTask(Task_InGameTrade, 10);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     HelpSystem_Disable();

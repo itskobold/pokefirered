@@ -34,6 +34,7 @@
 #include "field_effect.h"
 #include "fieldmap.h"
 #include "field_door.h"
+#include "time.h"
 #include "constants/event_objects.h"
 #include "constants/maps.h"
 #include "constants/sound.h"
@@ -1968,6 +1969,7 @@ bool8 ScrCmd_playslotmachine(struct ScriptContext * ctx)
 {
     u8 slotMachineIndex = VarGet(ScriptReadHalfword(ctx));
 
+    StopGameTime();
     PlaySlotMachine(slotMachineIndex, CB2_ReturnToFieldContinueScriptPlayMapMusic);
     ScriptContext_Stop();
     return TRUE;
@@ -2247,5 +2249,17 @@ bool8 ScrCmd_setmonmetlocation(struct ScriptContext * ctx)
 
     if (partyIndex < PARTY_SIZE)
         SetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_LOCATION, &location);
+    return FALSE;
+}
+
+bool8 ScrCmd_startgametime(struct ScriptContext* ctx)
+{
+    StartGameTime();
+    return FALSE;
+}
+
+bool8 ScrCmd_stopgametime(struct ScriptContext* ctx)
+{
+    StopGameTime();
     return FALSE;
 }

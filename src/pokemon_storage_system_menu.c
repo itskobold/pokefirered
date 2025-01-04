@@ -397,7 +397,7 @@ void CB2_ExitPokeStorage(void)
 {
     sPreviousBoxOption = GetCurrentBoxOption();
     gFieldCallback = FieldTask_ReturnToPcMenu;
-    SetMainCallback2(CB2_ReturnToField);
+    SetMainCallback2(CB2_ReturnToFieldWithoutStartingGameTime);
 }
 
 void ResetPokemonStorageSystem(void)

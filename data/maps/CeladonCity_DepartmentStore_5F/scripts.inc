@@ -16,11 +16,13 @@ CeladonCity_DepartmentStore_5F_EventScript_FloorSign::
 CeladonCity_DepartmentStore_5F_EventScript_ClerkXItems::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart CeladonCity_DepartmentStore_5F_XItems
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 
@@ -40,11 +42,13 @@ CeladonCity_DepartmentStore_5F_XItems::
 CeladonCity_DepartmentStore_5F_EventScript_ClerkVitamins::
 	goto_if_questlog EventScript_ReleaseEnd
 	lock
+	stopgametime
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
 	pokemart CeladonCity_DepartmentStore_5F_Vitamins
 	msgbox Text_PleaseComeAgain
+	startgametime
 	release
 	end
 
