@@ -98,7 +98,7 @@ void InitGameTime()
 	gSaveBlock2Ptr->time.numMinutes = 0;
 	gSaveBlock2Ptr->time.numHours = 9;
 	gSaveBlock2Ptr->time.numDays = 10;
-	gSaveBlock2Ptr->time.numMonths = MONTH_SEPTEMBER;
+	gSaveBlock2Ptr->time.numMonths = MONTH_MARCH;
 	gSaveBlock2Ptr->time.numYears = Random() % MAX_YEARS;
 	gSaveBlock2Ptr->time.day = DAY_TUESDAY;
 }
