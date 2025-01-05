@@ -1,5 +1,4 @@
 EventScript_PC::
-	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	stopgametime
 	goto_if_set FLAG_SYS_PC_STORAGE_DISABLED, EventScript_PCDisabled

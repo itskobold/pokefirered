@@ -58,7 +58,6 @@ TwoIsland_EventScript_SetShopExpanded3::
 	return
 
 TwoIsland_EventScript_Clerk::
-	goto_if_questlog EventScript_ReleaseEnd
 	lock
 	stopgametime
 	faceplayer

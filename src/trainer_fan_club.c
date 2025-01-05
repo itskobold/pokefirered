@@ -4,6 +4,7 @@
 #include "event_data.h"
 #include "event_scripts.h"
 #include "random.h"
+#include "trainer_fan_club.h"
 #include "constants/trainer_fan_club.h"
 
 struct TrainerFanClub
@@ -30,12 +31,6 @@ static void BufferFanClubTrainerName(struct LinkBattleRecords *, u8, u8);
 static void UpdateTrainerFansAfterLinkBattle(struct TrainerFanClub *);
 static bool8 DidPlayerGetFirstFans(struct TrainerFanClub * );
 static void SetPlayerGotFirstFans(struct TrainerFanClub *);
-
-void ResetTrainerFanClub(void)
-{
-    VarSet(VAR_FANCLUB_FAN_COUNTER, 0);
-    VarSet(VAR_FANCLUB_LOSE_FAN_TIMER, 0);
-}
 
 void Script_TryLoseFansFromPlayTimeAfterLinkBattle(void)
 {

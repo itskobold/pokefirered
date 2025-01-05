@@ -77,7 +77,10 @@
 #define PARTY_SIZE 6
 #define MULTI_PARTY_SIZE (PARTY_SIZE / 2)
 
-#define QUEST_LOG_SCENE_COUNT 4
+#define SCREEN_TINT_NONE              0
+#define SCREEN_TINT_GRAYSCALE         1
+#define SCREEN_TINT_SEPIA             2
+#define SCREEN_TINT_BACKUP_GRAYSCALE  3
 
 #define NUM_TOWER_CHALLENGE_TYPES 4
 

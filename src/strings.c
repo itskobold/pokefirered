@@ -935,8 +935,6 @@ const u8 gText_Day[] = _("Day");
 const u8 gText_Midday[] = _("Midday");
 const u8 gText_Dusk[] = _("Dusk");
 
-#include "data/text/quest_log.h"
-
 const u8 gText_WasUsedOn[] = _(" was used on\n");
 const u8 gText_Period[] = _(".");
 const u8 gText_LevelRoseTo[] = _("'s level rose to\n");

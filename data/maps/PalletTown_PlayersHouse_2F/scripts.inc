@@ -29,7 +29,6 @@ PalletTown_PlayersHouse_2F_EventScript_Sign::
 	end
 
 PalletTown_PlayersHouse_2F_EventScript_PC::
-	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	stopgametime
 	setvar VAR_0x8004, HELPCONTEXT_BEDROOM_PC

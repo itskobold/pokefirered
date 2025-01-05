@@ -3,7 +3,6 @@
 
 #include "pokemon_storage_system.h"
 #include "mon_markings.h"
-#include "quest_log.h"
 
 // The maximum number of Pokémon icons that can appear on-screen.
 // By default the limit is 40 (though in practice only 37 can be).
@@ -419,17 +418,16 @@ struct PokemonStorageSystemData
     struct PokeStorageItemIcon itemIcons[MAX_ITEM_ICONS];
     u16 movingItemId;
     u16 itemInfoWindowOffset;
-    struct QuestLogEvent_MovedBoxMon questLogData;
-    u16 unusedField2;
+    u8 unusedBuffer1[8];
     u16 displayMonPalOffset;
     u16 *displayMonTilePtr;
     struct Sprite *displayMonSprite;
     u16 displayMonPalBuffer[0x20];
-    u8 unusedBuffer1[0x40];
+    u8 unusedBuffer2[0x40];
     u8 tileBuffer[0x800];
-    u8 unusedBuffer2[0x1800];
+    u8 unusedBuffer3[0x1800];
     u8 itemIconBuffer[0x200];
-    u8 unusedBuffer3[0x600];
+    u8 unusedBuffer4[0x600];
     u8 wallpaperBgTilemapBuffer[0x1000];
     u8 menuTilemapBuffer[0x800];
 };

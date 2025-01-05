@@ -7,7 +7,6 @@
 #include "item_menu.h"
 #include "tm_case.h"
 #include "berry_pouch.h"
-#include "quest_log.h"
 #include "wild_encounter.h"
 #include "event_data.h"
 #include "mail_data.h"
@@ -30,6 +29,12 @@
 #include "berry_powder.h"
 #include "pokemon_jump.h"
 #include "event_scripts.h"
+#include "trainer_fan_club.h"
+
+// Testing stuff
+//#include "item.h"
+//#include "constants/items.h"
+//#include "constants/moves.h"
 
 // this file's functions
 static void ResetMiniGamesResults(void);
@@ -92,6 +97,12 @@ void Sav2_ClearSetDefault(void)
     SetDefaultOptions();
 }
 
+void ResetTrainerFanClub(void)
+{
+    VarSet(VAR_FANCLUB_FAN_COUNTER, 0);
+    VarSet(VAR_FANCLUB_LOSE_FAN_TIMER, 0);
+}
+
 void ResetMenuAndMonGlobals(void)
 {
     gDifferentSaveFile = FALSE;
@@ -100,7 +111,6 @@ void ResetMenuAndMonGlobals(void)
     ResetBagCursorPositions();
     ResetTMCaseCursorPos();
     BerryPouch_CursorResetToTop();
-    ResetQuestLog();
     SeedWildEncounterRng(Random());
     ResetSpecialVars();
 }
@@ -155,6 +165,14 @@ void NewGameInitData(void)
 
     // Enable debug menu
     gSaveBlock1Ptr->hasDebugMenu = TRUE;
+
+    // Testing stuff
+    //AddBagItem(ITEM_SUPER_ROD, 1);
+    //AddBagItem(ITEM_BICYCLE, 1);
+    //AddBagItem(ITEM_VS_SEEKER, 1);
+    //CreateMon(&gPlayerParty[0], SPECIES_KYOGRE, 100, 0, FALSE, 0, 0, 0);
+    //u16 data = MOVE_SURF;
+    //SetMonData(&gPlayerParty[0], MON_DATA_MOVE1, &data);
 }
 
 static void ResetMiniGamesResults(void)
