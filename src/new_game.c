@@ -26,6 +26,7 @@
 #include "renewable_hidden_items.h"
 #include "trainer_tower.h"
 #include "script.h"
+#include "time.h"
 #include "berry_powder.h"
 #include "pokemon_jump.h"
 #include "event_scripts.h"

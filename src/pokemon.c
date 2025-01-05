@@ -2371,6 +2371,21 @@ static void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 mo
     SetBoxMonData(boxMon, MON_DATA_PP_BONUSES, &ppBonuses);
 }
 
+bool8 IsMovePhysical(u16 move)
+{
+    return gBattleMoves[move].category == CATEGORY_PHYSICAL;
+}
+
+bool8 IsMoveSpecial(u16 move)
+{
+    return gBattleMoves[move].category == CATEGORY_SPECIAL;
+}
+
+bool8 IsMoveStatus(u16 move)
+{
+    return gBattleMoves[move].category == CATEGORY_STATUS;
+}
+
 #define APPLY_STAT_MOD(var, mon, stat, statIndex)                                   \
 {                                                                                   \
     (var) = (stat) * (gStatStageRatios)[(mon)->statStages[(statIndex)]][0];         \
@@ -2452,9 +2467,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         if (attackerHoldEffect == sHoldEffectToType[i][0]
             && type == sHoldEffectToType[i][1])
         {
-            if (IS_TYPE_PHYSICAL(type))
+            if (IsMovePhysical(move))
                 attack = (attack * (attackerHoldEffectParam + 100)) / 100;
-            else
+            else if (IsMoveSpecial(move))
                 spAttack = (spAttack * (attackerHoldEffectParam + 100)) / 100;
             break;
         }
@@ -2506,7 +2521,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (gBattleMoves[gCurrentMove].effect == EFFECT_EXPLOSION)
         defense /= 2;
 
-    if (IS_TYPE_PHYSICAL(type))
+    if (IsMovePhysical(move))
     {
         if (gCritMultiplier == 2)
         {
@@ -2561,7 +2576,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (type == TYPE_MYSTERY)
         damage = 0; // is ??? type. does 0 damage.
 
-    if (IS_TYPE_SPECIAL(type))
+    if (IsMoveSpecial(move))
     {
         if (gCritMultiplier == 2)
         {

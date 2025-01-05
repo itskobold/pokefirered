@@ -234,6 +234,11 @@
 #define MAX_TOTAL_EVS 510
 #define EV_ITEM_RAISE_LIMIT 100
 
+// Move categories
+#define CATEGORY_PHYSICAL 0
+#define CATEGORY_SPECIAL 1
+#define CATEGORY_STATUS 2
+
 // Battle move flags
 #define FLAG_MAKES_CONTACT          (1 << 0)
 #define FLAG_PROTECT_AFFECTED       (1 << 1)
