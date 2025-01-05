@@ -8,6 +8,7 @@
 #include "scanline_effect.h"
 #include "strings.h"
 #include "task.h"
+#include "time.h"
 #include "constants/sound.h"
 
 struct Diploma
@@ -122,6 +123,7 @@ static void Task_DiplomaInit(u8 taskId)
     {
     case 0:
         SetVBlankCallback(NULL);
+        StopGameTime();
         break;
     case 1:
         DiplomaInitScreen();
