@@ -491,13 +491,6 @@ CableClub_EventScript_AbortLinkIncorrectNumberOfParticipants::
 	release
 	end
 
-CableClub_EventScript_AbortLinkPlayerHasBadEgg::
-	special CloseLink
-	special HelpSystem_Enable
-	msgbox CableClub_Text_YouHaveAMonThatCantBeTaken
-	release
-	end
-
 CableClub_EventScript_WirelessClubAdjustements::
 	msgbox Text_WirelessClubUndergoingAdjustments
 	release
@@ -733,8 +726,6 @@ CableClub_EventScript_UnionRoomAttendant::
 	lock
 	faceplayer
 	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
-	specialvar VAR_RESULT, IsBadEggInParty
-	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	specialvar VAR_RESULT, IsWirelessAdapterConnected
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_UnionRoomAdapterNotConnected
@@ -834,8 +825,6 @@ CableClub_EventScript_DirectCornerAttendant::
 	lock
 	faceplayer
 	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
-	specialvar VAR_RESULT, IsBadEggInParty
-	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
 	specialvar VAR_RESULT, IsWirelessAdapterConnected
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_WelcomeToCableClub
 	message CableClub_Text_WelcomeWhichDirectCornerRoom

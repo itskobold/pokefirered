@@ -504,7 +504,7 @@ static void MultiMove_CreatePlacedMonIcons(void)
         u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
         for (j = sMultiMove->minColumn; j < columnCount; j++)
         {
-            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES))
+            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SPECIES) != SPECIES_NONE)
                 CreateBoxMonIconAtPos(boxPosition);
             monArrayId++;
             boxPosition++;
@@ -525,7 +525,7 @@ static void MultiMove_SetPlacedMonData(void)
         u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
         for (j = sMultiMove->minColumn; j < columnCount; j++)
         {
-            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES))
+            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SPECIES) != SPECIES_NONE)
                 SetBoxMonAt(boxId, boxPosition, &sMultiMove->boxMons[monArrayId]);
             boxPosition++;
             monArrayId++;
@@ -560,8 +560,8 @@ bool8 MultiMove_CanPlaceSelection(void)
         u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
         for (j = sMultiMove->minColumn; j < columnCount; j++)
         {
-            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES)
-                && GetCurrentBoxMonData(boxPosition, MON_DATA_SANITY_HAS_SPECIES))
+            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SPECIES) != SPECIES_NONE
+                && GetCurrentBoxMonData(boxPosition, MON_DATA_SPECIES) != SPECIES_NONE)
                 return FALSE;
 
             monArrayId++;
@@ -725,12 +725,12 @@ void TryLoadItemIconAtPos(u8 cursorArea, u8 cursorPos)
     switch (cursorArea)
     {
     case CURSOR_AREA_IN_BOX:
-        if (!GetCurrentBoxMonData(cursorPos, MON_DATA_SANITY_HAS_SPECIES))
+        if (GetCurrentBoxMonData(cursorPos, MON_DATA_SPECIES) == SPECIES_NONE)
             return;
         heldItem = GetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM);
         break;
     case CURSOR_AREA_IN_PARTY:
-        if (!GetMonData(&gPlayerParty[cursorPos], MON_DATA_SANITY_HAS_SPECIES))
+        if (!GetMonData(&gPlayerParty[cursorPos], MON_DATA_SPECIES) == SPECIES_NONE)
             return;
         heldItem = GetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM);
         break;

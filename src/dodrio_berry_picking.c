@@ -2913,8 +2913,8 @@ void IsDodrioInParty(void)
     int i;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES)
-            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_DODRIO)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_DODRIO
+            && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
         {
             gSpecialVar_Result = TRUE;
             return;

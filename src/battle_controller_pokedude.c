@@ -935,12 +935,6 @@ static u32 CopyPokedudeMonData(u8 monId, u8 *dst)
         dst[3] = (data32 & 0xFF000000) >> 24;
         size = 4;
         break;
-    case REQUEST_CHECKSUM_BATTLE:
-        data16 = GetMonData(mon, MON_DATA_CHECKSUM);
-        dst[0] = data16;
-        dst[1] = data16 >> 8;
-        size = 2;
-        break;
     case REQUEST_STATUS_BATTLE:
         data32 = GetMonData(mon, MON_DATA_STATUS);
         dst[0] = (data32 & 0x000000FF);
@@ -1224,9 +1218,6 @@ static void SetPokedudeMonData(u8 monId)
         break;
     case REQUEST_PERSONALITY_BATTLE:
         SetMonData(mon, MON_DATA_PERSONALITY, &gBattleBufferA[gActiveBattler][3]);
-        break;
-    case REQUEST_CHECKSUM_BATTLE:
-        SetMonData(mon, MON_DATA_CHECKSUM, &gBattleBufferA[gActiveBattler][3]);
         break;
     case REQUEST_STATUS_BATTLE:
         SetMonData(mon, MON_DATA_STATUS, &gBattleBufferA[gActiveBattler][3]);

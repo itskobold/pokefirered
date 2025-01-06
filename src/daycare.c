@@ -1142,7 +1142,7 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
 
     for (i = 0; i < DAYCARE_MON_COUNT; i++)
     {
-        if (GetBoxMonData(&daycare->mons[i].mon, MON_DATA_SANITY_HAS_SPECIES))
+        if (GetBoxMonData(&daycare->mons[i].mon, MON_DATA_SPECIES) != SPECIES_NONE)
             daycare->mons[i].steps++, validEggs++;
     }
 
@@ -1162,8 +1162,6 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
         for (i = 0; i < gPlayerPartyCount; i++)
         {
             if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
-                continue;
-            if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_BAD_EGG))
                 continue;
 
             steps = GetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP);
@@ -1185,7 +1183,7 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
 
 bool8 ShouldEggHatch(void)
 {
-    if (GetBoxMonData(&gSaveBlock1Ptr->route5DayCareMon.mon, MON_DATA_SANITY_HAS_SPECIES))
+    if (GetBoxMonData(&gSaveBlock1Ptr->route5DayCareMon.mon, MON_DATA_SPECIES) != SPECIES_NONE)
         gSaveBlock1Ptr->route5DayCareMon.steps++;
     return TryProduceOrHatchEgg(&gSaveBlock1Ptr->daycare);
 }

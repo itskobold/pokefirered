@@ -188,7 +188,7 @@ struct PokemonSummaryScreenData
     } summary;
 
     u8 ALIGNED(4) isEgg; /* 0x3200 */
-    u8 ALIGNED(4) isBadEgg; /* 0x3204 */
+    u8 ALIGNED(4) filler3204; /* 0x3204 */
 
     u8 ALIGNED(4) mode; /* 0x3208 */
     u8 ALIGNED(4) unk320C; /* 0x320C */
@@ -1037,10 +1037,6 @@ void ShowPokemonSummaryScreen(struct Pokemon * party, u8 cursorPos, u8 lastIdx, 
 
     BufferSelectedMonData(&sMonSummaryScreen->currentMon);
     sMonSummaryScreen->isEgg = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_IS_EGG);
-    sMonSummaryScreen->isBadEgg = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SANITY_IS_BAD_EGG);
-
-    if (sMonSummaryScreen->isBadEgg == TRUE)
-        sMonSummaryScreen->isEgg = TRUE;
 
     sMonSummaryScreen->lastPageFlipDirection = 0xff;
     SetMainCallback2(CB2_SetUpPSS);
@@ -2488,9 +2484,6 @@ static void PrintInfoPage(void)
         else
             hatchMsgIndex = 0;
 
-        if (sMonSummaryScreen->isBadEgg)
-            hatchMsgIndex = 0;
-
         AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 7, 45, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sEggHatchTimeTexts[hatchMsgIndex]);
     }
 }
@@ -2831,9 +2824,6 @@ static void PokeSum_PrintTrainerMemo_Egg(void)
                 chosenStrIndex++;
         }
     }
-
-    if (sMonSummaryScreen->isBadEgg)
-        chosenStrIndex = 0;
 
     AddTextPrinterParameterized4(sMonSummaryScreen->windowIds[POKESUM_WIN_TRAINER_MEMO], FONT_NORMAL, 0, 3, 0, 0, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sEggOriginTexts[chosenStrIndex]);
 }
@@ -5065,10 +5055,6 @@ static void Task_PokeSum_SwitchDisplayedPokemon(u8 taskId)
         BufferSelectedMonData(&sMonSummaryScreen->currentMon);
 
         sMonSummaryScreen->isEgg = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_IS_EGG);
-        sMonSummaryScreen->isBadEgg = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SANITY_IS_BAD_EGG);
-
-        if (sMonSummaryScreen->isBadEgg == TRUE)
-            sMonSummaryScreen->isEgg = TRUE;
 
         sMonSummaryScreen->switchMonTaskState++;
         break;

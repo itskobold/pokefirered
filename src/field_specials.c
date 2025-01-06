@@ -194,11 +194,9 @@ bool8 PlayerHasGrassPokemonInParty(void)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         pokemon = &gPlayerParty[i];
-        if (GetMonData(pokemon, MON_DATA_SANITY_HAS_SPECIES)
-         && !GetMonData(pokemon, MON_DATA_IS_EGG)
-        )
+        species = GetMonData(pokemon, MON_DATA_SPECIES);
+        if (species != SPECIES_NONE && !GetMonData(pokemon, MON_DATA_IS_EGG))
         {
-            species = GetMonData(pokemon, MON_DATA_SPECIES);
             if (gSpeciesInfo[species].types[0] == TYPE_GRASS || gSpeciesInfo[species].types[1] == TYPE_GRASS)
                 return TRUE;
         }
@@ -2297,18 +2295,6 @@ void SetDeoxysTrianglePalette(void)
     u8 num = VarGet(VAR_DEOXYS_INTERACTION_NUM);
     LoadPalette(sDeoxysObjectPals[num], OBJ_PLTT_ID(10), PLTT_SIZEOF(4));
     ApplyGlobalFieldPaletteTint(10);
-}
-
-bool8 IsBadEggInParty(void)
-{
-    u8 partyCount = CalculatePlayerPartyCount();
-    u8 i;
-    for (i = 0; i < partyCount; i++)
-    {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_BAD_EGG) == TRUE)
-            return TRUE;
-    }
-    return FALSE;
 }
 
 bool8 IsPlayerNotInTrainerTowerLobby(void)
